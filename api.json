@@ -1,0 +1,199 @@
+{
+  "openapi": "3.0.0",
+  "servers": [
+    {
+      "url": "https://tweeter.dev.narando.com/"
+    }
+  ],
+  "info": {
+    "title": "tweeter API",
+    "description": "a simple twitter clone",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/tweets": {
+      "get": {
+        "summary": "returns all tweets",
+        "tags": ["Tweets", "Level 1"],
+        "responses": {
+          "200": {
+            "description": "Tweets could be returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Tweet"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "create a new tweet",
+        "tags": ["Tweets", "Level 1"],
+        "responses": {
+          "201": {
+            "description": "Tweet created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tweet"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tweets/{id}": {
+      "get": {
+        "summary": "return detailed information for a single tweet",
+        "tags": ["Tweets", "Level 2"],
+        "responses": {
+          "200": {
+            "description": "Tweet could be retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tweet"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Tweet could not be found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "delete a tweet",
+        "tags": ["Tweets", "Level 2"],
+        "responses": {
+          "204": {
+            "description": "Tweet got deleted"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "summary": "return detailed information for a single user",
+        "tags": ["Users", "Level 3"],
+        "responses": {
+          "200": {
+            "description": "User could be retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User could not be found"
+          }
+        }
+      }
+    },
+    "/users/{id}/follow": {
+      "post": {
+        "summary": "follow this user",
+        "tags": ["Users", "Level 3"],
+        "responses": {
+          "201": {
+            "description":
+              "Following was successful. Returns the users you are currently following",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "schema": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "There is no logged in user"
+          },
+          "404": {
+            "description": "User could not be found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "unfollow this user",
+        "tags": ["Users", "Level 3"],
+        "responses": {
+          "204": {
+            "description": "Unfollowing was successful"
+          },
+          "403": {
+            "description": "There is no logged in user"
+          },
+          "404": {
+            "description": "User could not be found"
+          }
+        }
+      }
+    },
+    "/dashboard": {
+      "get": {
+        "summary":
+          "shows tweets from the users you follow. If there is no logged in user, show most recent tweets",
+        "tags": ["Users", "Tweets", "Level 4"],
+        "responses": {
+          "default": {
+            "description": "Default response"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "tweets": {
+            "type": "array",
+            "optional": true,
+            "items": {
+              "$ref": "#/components/schemas/Tweet"
+            }
+          }
+        }
+      },
+      "Tweet": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "author": {
+            "$ref": "#/components/schemas/User"
+          },
+          "content": {
+            "type": "string"
+          },
+          "time": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+}
