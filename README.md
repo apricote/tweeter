@@ -11,7 +11,7 @@ To work on this project, fork it to your own account!
 You can find the specification in the file `api.json`, though I would recommend
 to use a UI for inspecting it: [OpenApiRenderer][1]
 
-[1]: (https://temando.github.io/open-api-renderer/demo/?url=https://raw.githubusercontent.com/apricote/tweeter/master/api.json)
+[1]: https://temando.github.io/open-api-renderer/demo/?url=https://raw.githubusercontent.com/apricote/tweeter/master/api.json
 
 ### Sketch the Database schema
 
